@@ -16,8 +16,9 @@ int main(int argc, char *argv[]) {
     int largeur = myInfo.getHeightDisplay() * proportionPanel;
     int hauteur = myInfo.getWidthDisplay() * proportionPanel;
 
-    int boardWidth = 100;
-    int boardHeight = 100;
+    int boardWidth = myCLIDatas.getWidth();
+    int boardHeight = myCLIDatas.getHeight();
+    
     Tableau gameBoard(boardHeight, boardWidth);
     if (myCLIDatas.getIsManual()) {
         addManualValuesTableau(gameBoard);

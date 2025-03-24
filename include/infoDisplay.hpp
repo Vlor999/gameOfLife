@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
@@ -23,8 +25,10 @@ class infoDisplay
         }
 };
 
-infoDisplay::infoDisplay(/* args */)
-    : hauteur(sf::VideoMode::getDesktopMode().height), largeur(sf::VideoMode::getDesktopMode().width) {}
+infoDisplay::infoDisplay(/* args */){
+    hauteur = sf::VideoMode::getDesktopMode().height;
+    largeur = sf::VideoMode::getDesktopMode().width;
+}
 
 void infoDisplay::showInfo() {
     cout << "Hauteur (height): " << hauteur << ", Largeur (width): " << largeur << "\n";

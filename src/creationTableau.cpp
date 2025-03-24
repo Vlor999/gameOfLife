@@ -1,7 +1,7 @@
 #include <thread>
 #include <vector>
-
 #include "include/creationTableau.hpp"
+#include "include/case.hpp"
 
 Tableau creationTableau() {
     Tableau carteInitiale;
@@ -40,7 +40,7 @@ void addRandomValuesTableau(Tableau& mainTab) {
     }
 }
 
-int foundNombreVivantAutour(int posHauteur, int posLargeur, const vector<vector<int>>& tableauVie) {
+int foundNombreVivantAutour(int posHauteur, int posLargeur, const vector<vector<Case>>& tableauVie) {
     int hauteur = tableauVie.size();
     int largeur = tableauVie[0].size();
     int compteurVivant = 0;
@@ -52,7 +52,7 @@ int foundNombreVivantAutour(int posHauteur, int posLargeur, const vector<vector<
             int newH = posHauteur + h;
             int newC = posLargeur + c;
             if (newH >= 0 && newH < hauteur && newC >= 0 && newC < largeur) {
-                compteurVivant += tableauVie[newH][newC] > 0 ? 1 : 0;
+                compteurVivant += tableauVie[newH][newC].getValue() > 0 ? 1 : 0;
             }
         }
     }
@@ -62,21 +62,21 @@ int foundNombreVivantAutour(int posHauteur, int posLargeur, const vector<vector<
 void updateTableau(Tableau& mainTab) {
     int hauteur = mainTab.getHauteur();
     int largeur = mainTab.getLargeur();
-    vector<vector<int>> currentTab = mainTab.getCurrentTab();
-    vector<vector<int>> outputTab(hauteur, vector<int>(largeur, 0));
+    vector<vector<Case>> currentTab = mainTab.getCurrentTab();
+    vector<vector<Case>> outputTab(hauteur, vector<Case>(largeur, Case(0)));
     vector<thread> threads;
 
     auto worker = [&](int start, int end) {
         for (int h = start; h < end; h++) {
             for (int c = 0; c < largeur; c++) {
                 int nombreAutour = foundNombreVivantAutour(h, c, currentTab);
-                bool estVivant = currentTab[h][c] > 0;
+                bool estVivant = currentTab[h][c].getValue() > 0;
                 if (estVivant && (nombreAutour == 2 || nombreAutour == 3)) {
-                    outputTab[h][c] = 255;
+                    outputTab[h][c] = Case(255);
                 } else if (!estVivant && nombreAutour == 3) {
-                    outputTab[h][c] = 255;
+                    outputTab[h][c] = Case(255);
                 } else {
-                    outputTab[h][c] = 0;
+                    outputTab[h][c] = Case(0);
                 }
             }
         }

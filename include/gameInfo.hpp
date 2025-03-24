@@ -1,8 +1,11 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <string>
 
 #include "creationTableau.hpp"
+#include "case.hpp"
 
 using namespace std;
 
@@ -71,7 +74,8 @@ void gameInfo::initializeVertices() {
 void gameInfo::updateVertices(const Tableau& gameBoard) {
     for (int y = 0; y < gameBoard.getHauteur(); y++) {
         for (int x = 0; x < gameBoard.getLargeur(); x++) {
-            int cellValue = gameBoard.getCell(y, x);
+            Case currentCell = gameBoard.getCell(y, x);
+            int cellValue = currentCell.getValue();
             sf::Vertex* quad = &cellsVertices[(y * boardWidth + x) * 4];
 
             quad[0].position = sf::Vector2f(x * cellWidth, y * cellHeight);

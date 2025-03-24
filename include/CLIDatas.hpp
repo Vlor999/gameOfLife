@@ -1,3 +1,4 @@
+#pragma once
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
@@ -13,6 +14,8 @@ private:
     int attente;
     bool isHelp = false;
     bool isManual = false;
+    int height = 100;
+    int width = 100;
 public:
     CLIDatas() : proportion(1.0), nameOfGame("Game of life"), attente(0) {}
 
@@ -36,6 +39,10 @@ public:
             } else if (std::strcmp(argv[i], "--s") == 0 && i + 1 < argc) {
                 attente = std::atoi(argv[i + 1]);
                 i++;
+            } else if (std::strcmp(argv[i], "--size") == 0 && i + 2 < argc) {
+                height = std::atoi(argv[i + 1]);
+                width = std::atoi(argv[i + 1]);
+                i += 2;
             } else {
                 displayHelp();
                 return;
@@ -64,6 +71,14 @@ public:
 
     int getAttente() const {
         return attente;
+    }
+
+    int getHeight() const {
+        return height;
+    }
+
+    int getWidth() const {
+        return width;
     }
 
     void displayHelp() const {
