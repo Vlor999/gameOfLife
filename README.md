@@ -11,7 +11,7 @@ My first version of the game of life in ```C++```
 - **src** the main directory with all the files to write the game.
 - **include** for all the ```hpp``` files that define functions, classes, and others.
 - **build** to create when you clone the repository.
-- **tests** tests onto everypart of the code
+- **tests** to verify every part of the code.
 
 ## Launch 
 To launch the game of life: 
@@ -19,7 +19,11 @@ To launch the game of life:
 mkdir -p build && cd build
 cmake ..
 make
-./GameOfLife
+./GameOfLife <options>
+```
+or use the ```sh``` file : 
+```
+./launcher.sh <options>
 ```
 
 ## Installation
@@ -33,6 +37,16 @@ brew link sfml@2 --force
 ```sh
 sudo apt install libsfml-dev
 ```
+
+## Tests
+To tests your changement you can do it locally with : 
+```sh
+cd build
+cmake ..
+make test # or ctest
+```
+
+Otherwise you can use the pipeline into your github repository that will use the same tests case
 
 ## License 
 - [MIT License](./LICENSE) in the file: **LICENSE**.
