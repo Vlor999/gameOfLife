@@ -1,5 +1,5 @@
 name: "Build and Test"
-run-name: ${{ github.actor }} is testing out GitHub Actions
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push, pull_request]
 
 jobs:
@@ -36,6 +36,8 @@ jobs:
         run: mkdir build
 
       - name: Configure CMake
+        env:
+          SFML_DIR: /usr/lib/x86_64-linux-gnu/cmake/SFML
         run: cmake -S . -B build
 
       - name: Build
