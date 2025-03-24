@@ -32,17 +32,36 @@ int main(int argc, char *argv[]) {
     myGame.initializeVertices();
     
     // Boucle principale
+    int tempsAttenteMilli = myCLIDatas.getAttente();
+    bool isPaused = false;
     while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
 
-        myGame.updateVertices(gameBoard);
-        myGame.render();
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+            window.close();
+            }
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Escape) {
+                    window.close();
+                }
+                if (event.key.code == sf::Keyboard::Space) {
+                    isPaused = !isPaused;
+                }
+                // Add other key events here if needed
+            }
+        }
         
-        updateTableau(gameBoard);
+        if (!isPaused) {
+            myGame.updateVertices(gameBoard);
+            myGame.render();
+            updateTableau(gameBoard);
+        }
+        else {
+            myGame.updateVertices(gameBoard);
+            myGame.render();
+        }
+        sf::sleep(sf::milliseconds(tempsAttenteMilli));
     }
     
     return EXIT_SUCCESS;

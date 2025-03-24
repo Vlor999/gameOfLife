@@ -10,17 +10,20 @@ private:
     string currentFile;
     string nameOfGame;
     float proportion;
+    int attente;
     bool isHelp = false;
     bool isManual = false;
 public:
     CLIDatas(){
         this->proportion = 1.0;
         this->nameOfGame = "Game of life";
+        this->attente = 0;
     }
 
     CLIDatas(int argc, char* argv[]){
         this->proportion = 1.0; // default value
         this->nameOfGame = "Game of life";
+        this->attente = 0;
         this->currentFile = argv[0];
         for (int i = 1; i < argc; i++){
             if (std::strcmp(argv[i], "--p") == 0 && i + 1 < argc){
@@ -36,6 +39,10 @@ public:
             }
             else if (std::strcmp(argv[i], "--n") == 0 && i + 1 < argc){
                 this->nameOfGame = argv[i + 1];
+                i++;
+            }
+            else if (std::strcmp(argv[i], "--s") == 0 && i + 1 < argc){
+                this->attente = std::atoi(argv[i + 1]);
                 i++;
             }
             else {
@@ -62,6 +69,10 @@ public:
 
     bool getIsManual() const {
         return isManual;
+    }
+
+    int getAttente() const {
+        return attente;
     }
 
     void displayHelp() const {
