@@ -19,7 +19,12 @@ int main(int argc, char *argv[]) {
     int boardWidth = 100;
     int boardHeight = 100;
     Tableau gameBoard(boardHeight, boardWidth);
-    addRandomValuesTableau(gameBoard);
+    if(myCLIDatas.getIsManual()){
+        addManualValuesTableau(gameBoard);
+    }
+    else{
+        addRandomValuesTableau(gameBoard);
+    }
 
     gameInfo myGame = gameInfo(myCLIDatas.getNameOfGame(), hauteur, largeur, boardHeight, boardWidth);
     sf::RenderWindow& window = myGame.getWindow();

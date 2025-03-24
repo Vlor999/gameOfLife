@@ -64,3 +64,4 @@ Tableau creationTableau();
 void addRandomValuesTableau(Tableau& mainTab);
 void updateTableau(Tableau& mainTab);
 int foundNombreVivantAutour(int posHauteur, int posLargeur, vector<vector<int>> tableauVie);
+void addManualValuesTableau(Tableau& mainTab);

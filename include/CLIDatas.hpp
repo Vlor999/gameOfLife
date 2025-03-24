@@ -32,6 +32,7 @@ public:
             }
             else if (std::strcmp(argv[i], "--m") == 0){
                 this->isManual = true;
+                cout << "Command : --m not yet available\n";
             }
             else if (std::strcmp(argv[i], "--n") == 0 && i + 1 < argc){
                 this->nameOfGame = argv[i + 1];
@@ -57,6 +58,10 @@ public:
 
     string getNameOfGame() const {
         return nameOfGame;
+    }
+
+    bool getIsManual() const {
+        return isManual;
     }
 
     void displayHelp() const {

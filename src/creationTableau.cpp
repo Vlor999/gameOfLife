@@ -8,6 +8,9 @@ Tableau creationTableau() {
     return carteInitiale;
 }
 
+void addManualValuesTableau(Tableau& mainTab){
+}
+
 void addRandomValuesTableau(Tableau& mainTab){
     srand(time(0));
     int hauteur = mainTab.getHauteur();
