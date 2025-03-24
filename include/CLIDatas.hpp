@@ -14,50 +14,41 @@ private:
     bool isHelp = false;
     bool isManual = false;
 public:
-    CLIDatas(){
-        this->proportion = 1.0;
-        this->nameOfGame = "Game of life";
-        this->attente = 0;
-    }
+    CLIDatas() : proportion(1.0), nameOfGame("Game of life"), attente(0) {}
 
-    CLIDatas(int argc, char* argv[]){
-        this->proportion = 1.0; // default value
-        this->nameOfGame = "Game of life";
-        this->attente = 0;
-        this->currentFile = argv[0];
-        for (int i = 1; i < argc; i++){
-            if (std::strcmp(argv[i], "--p") == 0 && i + 1 < argc){
-                this->proportion = std::atof(argv[i + 1]);
-                i++;
-            }
-            else if (std::strcmp(argv[i], "--help") == 0){
-                this->isHelp = true;
-            }
-            else if (std::strcmp(argv[i], "--m") == 0){
-                this->isManual = true;
+    CLIDatas(int argc, char* argv[]) : proportion(1.0), nameOfGame("Game of life"), attente(0), currentFile(argv[0]) {
+        for (int i = 1; i < argc; i++) {
+            if (std::strcmp(argv[i], "--p") == 0) {
+                if (i + 1 < argc) {
+                    proportion = std::atof(argv[i + 1]);
+                    i++;
+                } else {
+                    proportion = 1.0;
+                }
+            } else if (std::strcmp(argv[i], "--help") == 0) {
+                isHelp = true;
+            } else if (std::strcmp(argv[i], "--m") == 0) {
+                isManual = true;
                 cout << "Command : --m not yet available\n";
-            }
-            else if (std::strcmp(argv[i], "--n") == 0 && i + 1 < argc){
-                this->nameOfGame = argv[i + 1];
+            } else if (std::strcmp(argv[i], "--n") == 0 && i + 1 < argc) {
+                nameOfGame = argv[i + 1];
                 i++;
-            }
-            else if (std::strcmp(argv[i], "--s") == 0 && i + 1 < argc){
-                this->attente = std::atoi(argv[i + 1]);
+            } else if (std::strcmp(argv[i], "--s") == 0 && i + 1 < argc) {
+                attente = std::atoi(argv[i + 1]);
                 i++;
-            }
-            else {
+            } else {
                 displayHelp();
-                exit(EXIT_FAILURE);
+                return;
             }
         }
 
-        if (this->isHelp){
+        if (isHelp) {
             displayHelp();
             exit(EXIT_SUCCESS);
         }
     }
-    
-    ~CLIDatas();
+
+    ~CLIDatas() = default;
 
     float getProportion() const {
         return proportion;
@@ -84,7 +75,3 @@ public:
                   << "  --help                    Display this help message\n";
     }
 };
-
-CLIDatas::~CLIDatas()
-{
-}

@@ -11,28 +11,21 @@ class infoDisplay
         int largeur;
     public:
         infoDisplay(/* args */);
-        ~infoDisplay();
+        ~infoDisplay() = default;
         void showInfo();
 
-        int getHeightDisplay(){
-            return this->hauteur;
+        int getHeightDisplay() const {
+            return hauteur;
         }
 
-        int getWidthDisplay(){
-            return this->largeur;
+        int getWidthDisplay() const {
+            return largeur;
         }
 };
 
 infoDisplay::infoDisplay(/* args */)
-{
-    this->hauteur = sf::VideoMode::getDesktopMode().height;
-    this->largeur = sf::VideoMode::getDesktopMode().width;
-}
+    : hauteur(sf::VideoMode::getDesktopMode().height), largeur(sf::VideoMode::getDesktopMode().width) {}
 
-infoDisplay::~infoDisplay()
-{
-}
-
-void infoDisplay::showInfo(){
-    cout << "Hauteur (height): " << this->hauteur << ", Largeur (width): " << this->largeur << "\n";
+void infoDisplay::showInfo() {
+    cout << "Hauteur (height): " << hauteur << ", Largeur (width): " << largeur << "\n";
 }

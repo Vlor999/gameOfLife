@@ -9,7 +9,6 @@ using namespace std;
 class gameInfo
 {
     private:
-        /* data */
         string nameOfGame;
         int hauteur;
         int largeur;
@@ -18,29 +17,29 @@ class gameInfo
 
         float cellWidth;
         float cellHeight;
-        
+
         sf::RenderWindow window;
         sf::RectangleShape cell;
         sf::VertexArray cellsVertices;
 
     public:
         gameInfo(string nameOfGame, int hauteur, int largeur, int boardHeight, int boardWidth);
-        ~gameInfo();
+        ~gameInfo() = default;
 
-        float getCellHeight(){
+        float getCellHeight() const {
             return cellHeight;
         }
 
-        float getCellWidth(){
+        float getCellWidth() const {
             return cellWidth;
         }
 
-        sf::RenderWindow& getWindow(){
-            return this->window;
+        sf::RenderWindow& getWindow() {
+            return window;
         }
 
-        sf::RectangleShape& getCell(){
-            return this->cell;
+        sf::RectangleShape& getCell() {
+            return cell;
         }
 
         sf::VertexArray& getCellsVertices() {
@@ -54,24 +53,14 @@ class gameInfo
 };
 
 gameInfo::gameInfo(string nameOfGame, int hauteur, int largeur, int boardHeight, int boardWidth)
-{
-    this->nameOfGame = nameOfGame;
-    this->hauteur = hauteur;
-    this->largeur = largeur;
-    this->boardHeight = boardHeight;
-    this->boardWidth = boardWidth;
+    : nameOfGame(std::move(nameOfGame)), hauteur(hauteur), largeur(largeur), boardHeight(boardHeight), boardWidth(boardWidth),
+      cellHeight(static_cast<float>(largeur) / boardHeight), cellWidth(static_cast<float>(hauteur) / boardWidth),
+      window(sf::VideoMode(hauteur, largeur), this->nameOfGame), cell(sf::Vector2f(cellWidth, cellHeight)) {}
 
-    this->cellHeight = static_cast<float>(largeur) / boardHeight;
-    this->cellWidth = static_cast<float>(hauteur) / boardWidth;
-
-    this->window.create(sf::VideoMode(hauteur, largeur), nameOfGame);
-    this->cell = sf::RectangleShape(sf::Vector2f(cellWidth, cellHeight));
-}
-
-void gameInfo::setBox(int x, int y, int cellValue){
-    this->cell.setPosition(x * this->cellWidth, y * this->cellHeight);
-    this->cell.setFillColor(sf::Color(cellValue, cellValue, cellValue));
-    this->window.draw(cell);
+void gameInfo::setBox(int x, int y, int cellValue) {
+    cell.setPosition(x * cellWidth, y * cellHeight);
+    cell.setFillColor(sf::Color(cellValue, cellValue, cellValue));
+    window.draw(cell);
 }
 
 void gameInfo::initializeVertices() {
@@ -103,8 +92,4 @@ void gameInfo::render() {
     window.clear(sf::Color::Black);
     window.draw(cellsVertices);
     window.display();
-}
-
-gameInfo::~gameInfo()
-{
 }
