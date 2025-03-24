@@ -11,6 +11,7 @@ My first version of the game of life in ```C++```
 - **src** the main directory with all the files to write the game.
 - **include** for all the ```hpp``` files that define functions, classes, and others.
 - **build** to create when you clone the repository.
+- **tests** tests onto everypart of the code
 
 ## Launch 
 To launch the game of life: 
