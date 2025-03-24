@@ -1,75 +1,39 @@
-name: "Build and Test"
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: Build and Test
+run-name: ${{ github.actor }} is testing
 on: [push, pull_request]
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.cache-key.outputs.key }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up CMake
-        uses: jwlawson/actions-setup-cmake@v1
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libsfml-dev xvfb
-
-      - name: Compute cache key
-        id: cache-key
-        run: echo "key=$(date +%s)" >> $GITHUB_OUTPUT
-
   build:
-    needs: setup
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Create build directory
-        run: mkdir build
+    - name: Set up CMake
+      uses: jwlawson/actions-setup-cmake@v1
 
-      - name: Configure CMake
-        env:
-          SFML_DIR: /usr/lib/x86_64-linux-gnu/cmake/SFML
-        run: cmake -S . -B build
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libsfml-dev xvfb
 
-      - name: Build
-        run: cmake --build build
+    - name: Start Xvfb
+      run: |
+        /usr/bin/Xvfb :99 -screen 0 1024x768x24 &
+        export DISPLAY=:99
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: build
+    - name: Create build directory
+      run: mkdir build
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
+    - name: Configure CMake
+      run: cmake -S . -B build
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Build
+      run: cmake --build build
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-          path: build
-
-      - name: Start Xvfb
-        run: |
-          /usr/bin/Xvfb :99 -screen 0 1024x768x24 &
-          export DISPLAY=:99
-
-      - name: Run tests
-        run: |
-          export DISPLAY=:99
-          cd build
-          ctest --output-on-failure
+    - name: Run tests
+      run: |
+        export DISPLAY=:99
+        cd build
+        ctest --output-on-failure
