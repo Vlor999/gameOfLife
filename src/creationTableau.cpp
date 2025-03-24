@@ -6,6 +6,7 @@ Tableau creationTableau() {
 }
 
 void addRandomValuesTableau(Tableau& mainTab){
+    srand(time(0));
     int hauteur = mainTab.getHauteur();
     int largeur = mainTab.getLargeur();
 

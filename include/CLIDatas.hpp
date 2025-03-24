@@ -2,21 +2,25 @@
 #include <cstdlib>
 #include <iostream>
 
+
 using namespace std;
 
 class CLIDatas
 {
 private:
     string currentFile;
+    string nameOfGame;
     float proportion;
     bool isHelp = false;
 public:
     CLIDatas(){
         this->proportion = 1.0;
+        this->nameOfGame = "Game of life";
     }
 
     CLIDatas(int argc, char* argv[]){
         this->proportion = 1.0; // default value
+        this->nameOfGame = "Game of life";
         this->currentFile = argv[0];
         for (int i = 1; i < argc; i++){
             if (std::strcmp(argv[i], "--p") == 0 && i + 1 < argc){
@@ -24,6 +28,9 @@ public:
             }
             else if (std::strcmp(argv[i], "--help") == 0){
                 this->isHelp = true;
+            }
+            else if (std::strcmp(argv[i], "--n") == 0 && i + 1 < argc){
+                this->nameOfGame = argv[i + 1];
             }
         }
 
@@ -37,6 +44,10 @@ public:
 
     float getProportion() const {
         return proportion;
+    }
+
+    string getNameOfGame() const {
+        return nameOfGame;
     }
 
     void displayHelp() const {

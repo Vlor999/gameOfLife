@@ -5,22 +5,29 @@
 #include "include/creationTableau.hpp"
 #include "include/infoDisplay.hpp"
 #include "include/CLIDatas.hpp"
+#include "include/gameInfo.hpp"
 
 int main(int argc, char *argv[]) {
     CLIDatas myCLIDatas = CLIDatas(argc, argv);
+    float proportionPanel = myCLIDatas.getProportion();
+
     infoDisplay myInfo;
-    myInfo.showInfo();
-    int largeur = myInfo.getHeightDisplay() * myCLIDatas.getProportion();
-    int hauteur = myInfo.getWidthDisplay() * myCLIDatas.getProportion();
-    sf::RenderWindow window(sf::VideoMode(hauteur, largeur), "Game of Life");
+    int largeur = myInfo.getHeightDisplay() * proportionPanel;
+    int hauteur = myInfo.getWidthDisplay() * proportionPanel;
     
-    Tableau gameBoard = creationTableau();
+    int boardWidth = 100;
+    int boardHeight = 100;
+    Tableau gameBoard(boardHeight, boardWidth);
     addRandomValuesTableau(gameBoard);
+
+    gameInfo myGame = gameInfo(myCLIDatas.getNameOfGame(), hauteur, largeur, boardHeight, boardWidth);
+    sf::RenderWindow& window = myGame.getWindow();
     
-    // Configuration d'un cercle de test pour vérifier que SFML fonctionne
-    sf::CircleShape shape(50);
-    shape.setFillColor(sf::Color::Green);
-    shape.setPosition((hauteur - shape.getRadius() * 2) / 2, (largeur - shape.getRadius() * 2) / 2);
+    float cellWidth = myGame.getCellWidth();
+    float cellHeight = myGame.getCellHeight();
+    
+    // Création d'un rectangle qui sera réutilisé pour dessiner chaque cellule
+    sf::RectangleShape cell(sf::Vector2f(cellWidth, cellHeight));
 
     // Boucle principale
     while (window.isOpen()) {
@@ -30,8 +37,18 @@ int main(int argc, char *argv[]) {
                 window.close();
         }
 
-        window.clear();
-        window.draw(shape);
+        window.clear(sf::Color::Black);
+        
+        // Dessin de chaque cellule du tableau
+        for (int y = 0; y < gameBoard.getHauteur(); y++) {
+            for (int x = 0; x < gameBoard.getLargeur(); x++) {
+                int cellValue = gameBoard.getCell(y, x);
+                cell.setPosition(x * cellWidth, y * cellHeight);
+                cell.setFillColor(sf::Color(cellValue, cellValue, cellValue));
+                window.draw(cell);
+            }
+        }
+        
         window.display();
     }
     

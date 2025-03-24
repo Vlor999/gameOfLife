@@ -23,8 +23,10 @@ class Tableau
             this->tableau = initTableau();
         }
         
-        Tableau(){
-            Tableau(100, 100);
+        Tableau() {
+            this->hauteur = 100;
+            this->largeur = 100;
+            this->tableau = initTableau();
         } 
         
         ~Tableau() {}
