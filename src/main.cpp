@@ -24,7 +24,8 @@ int main(int argc, char *argv[]) {
 
     gameInfo myGame = gameInfo(myCLIDatas.getNameOfGame(), hauteur, largeur, boardHeight, boardWidth);
     sf::RenderWindow& window = myGame.getWindow();
-    sf::RectangleShape& cell = myGame.getCell();
+    
+    myGame.initializeVertices();
     
     // Boucle principale
     while (window.isOpen()) {
@@ -34,17 +35,8 @@ int main(int argc, char *argv[]) {
                 window.close();
         }
 
-        window.clear(sf::Color::Black);
-        
-        // Dessin de chaque cellule du tableau
-        for (int y = 0; y < gameBoard.getHauteur(); y++) {
-            for (int x = 0; x < gameBoard.getLargeur(); x++) {
-                int cellValue = gameBoard.getCell(y, x);
-                myGame.setBox(x, y, cellValue);
-            }
-        }
-        
-        window.display();
+        myGame.updateVertices(gameBoard);
+        myGame.render();
         
         updateTableau(gameBoard);
     }

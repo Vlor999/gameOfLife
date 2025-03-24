@@ -1,3 +1,6 @@
+#include <thread>
+#include <vector>
+
 #include "include/creationTableau.hpp"
 
 Tableau creationTableau() {
@@ -9,13 +12,27 @@ void addRandomValuesTableau(Tableau& mainTab){
     srand(time(0));
     int hauteur = mainTab.getHauteur();
     int largeur = mainTab.getLargeur();
+    vector<thread> threads;
 
-    #pragma omp parallel for collapse(2)
-    for(int h = 0; h < hauteur; h++){
-        for(int l = 0; l < largeur; l++){
-            int randomVal = rand() % 2;
-            mainTab.setCell(h, l, randomVal * 255);
+    auto worker = [&](int start, int end) {
+        for (int h = start; h < end; h++) {
+            for (int l = 0; l < largeur; l++) {
+                int randomVal = rand() % 2;
+                mainTab.setCell(h, l, randomVal * 255);
+            }
         }
+    };
+
+    int numThreads = thread::hardware_concurrency();
+    int chunkSize = hauteur / numThreads;
+    for (int i = 0; i < numThreads; i++) {
+        int start = i * chunkSize;
+        int end = (i == numThreads - 1) ? hauteur : start + chunkSize;
+        threads.emplace_back(worker, start, end);
+    }
+
+    for (auto& t : threads) {
+        t.join();
     }
 }
 
@@ -44,23 +61,35 @@ void updateTableau(Tableau& mainTab){
     int largeur = mainTab.getLargeur();
     vector<vector<int>> currentTab = mainTab.getCurrentTab();
     vector<vector<int>> outputTab(hauteur, vector<int>(largeur, 0));
+    vector<thread> threads;
 
-    #pragma omp parallel for collapse(2)
-    for (int h = 0; h < hauteur; h++){
-        for (int c = 0; c < largeur; c++)
-        {
-            int nombreAutour = foundNombreVivantAutour(h, c, currentTab);
-            bool estVivant = currentTab[h][c] > 0;
-            if (estVivant && (nombreAutour == 2 || nombreAutour == 3)){
-                outputTab[h][c] = 255;
+    auto worker = [&](int start, int end) {
+        for (int h = start; h < end; h++) {
+            for (int c = 0; c < largeur; c++) {
+                int nombreAutour = foundNombreVivantAutour(h, c, currentTab);
+                bool estVivant = currentTab[h][c] > 0;
+                if (estVivant && (nombreAutour == 2 || nombreAutour == 3)) {
+                    outputTab[h][c] = 255;
+                } else if (!estVivant && nombreAutour == 3) {
+                    outputTab[h][c] = 255;
+                } else {
+                    outputTab[h][c] = 0;
+                }
             }
-            else if (!estVivant && nombreAutour == 3){
-                outputTab[h][c] = 255;
-            }
-            else {
-                outputTab[h][c] = 0;
-            }
-        }   
+        }
+    };
+
+    int numThreads = thread::hardware_concurrency();
+    int chunkSize = hauteur / numThreads;
+    for (int i = 0; i < numThreads; i++) {
+        int start = i * chunkSize;
+        int end = (i == numThreads - 1) ? hauteur : start + chunkSize;
+        threads.emplace_back(worker, start, end);
     }
+
+    for (auto& t : threads) {
+        t.join();
+    }
+
     mainTab.setTab(outputTab);
 }

@@ -54,6 +54,10 @@ class Tableau
         void setTab(vector<vector<int>> newTab){
             this->tableau = newTab;
         }
+
+        vector<vector<int>>& getTab() {
+            return tableau;
+        }
 };
 
 Tableau creationTableau();
