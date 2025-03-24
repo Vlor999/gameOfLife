@@ -10,7 +10,6 @@ My first version of the game of life in ```C++```
 ## Structure
 - **src** the main directory with all the files to write the game.
 - **include** for all the ```hpp``` files that define functions, classes, and others.
-- **bin** for the execution files.
 - **build** to create when you clone the repository.
 
 ## Launch 
