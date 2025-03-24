@@ -11,6 +11,7 @@ private:
     string nameOfGame;
     float proportion;
     bool isHelp = false;
+    bool isManual = false;
 public:
     CLIDatas(){
         this->proportion = 1.0;
@@ -28,6 +29,9 @@ public:
             }
             else if (std::strcmp(argv[i], "--help") == 0){
                 this->isHelp = true;
+            }
+            else if (std::strcmp(argv[i], "--m") == 0){
+                this->isManual = true;
             }
             else if (std::strcmp(argv[i], "--n") == 0 && i + 1 < argc){
                 this->nameOfGame = argv[i + 1];
@@ -60,6 +64,7 @@ public:
                   << "Options:\n"
                   << "  --p <value>               Set the proportion value\n"
                   << "  --n <name of your game>   Set the name of the window\n"
+                  << "  --m                       You are going to set the position of the object\n"
                   << "  --help                    Display this help message\n";
     }
 };
