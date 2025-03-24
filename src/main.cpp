@@ -15,22 +15,21 @@ int main(int argc, char *argv[]) {
     infoDisplay myInfo;
     int largeur = myInfo.getHeightDisplay() * proportionPanel;
     int hauteur = myInfo.getWidthDisplay() * proportionPanel;
-    
+
     int boardWidth = 100;
     int boardHeight = 100;
     Tableau gameBoard(boardHeight, boardWidth);
-    if(myCLIDatas.getIsManual()){
+    if (myCLIDatas.getIsManual()) {
         addManualValuesTableau(gameBoard);
-    }
-    else{
+    } else {
         addRandomValuesTableau(gameBoard);
     }
 
-    gameInfo myGame = gameInfo(myCLIDatas.getNameOfGame(), hauteur, largeur, boardHeight, boardWidth);
+    gameInfo myGame(myCLIDatas.getNameOfGame(), hauteur, largeur, boardHeight, boardWidth);
     sf::RenderWindow& window = myGame.getWindow();
-    
+
     myGame.initializeVertices();
-    
+
     // Boucle principale
     int tempsAttenteMilli = myCLIDatas.getAttente();
     bool isPaused = false;
@@ -39,7 +38,7 @@ int main(int argc, char *argv[]) {
 
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-            window.close();
+                window.close();
             }
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
@@ -51,18 +50,14 @@ int main(int argc, char *argv[]) {
                 // Add other key events here if needed
             }
         }
-        
+
         if (!isPaused) {
-            myGame.updateVertices(gameBoard);
-            myGame.render();
             updateTableau(gameBoard);
         }
-        else {
-            myGame.updateVertices(gameBoard);
-            myGame.render();
-        }
+        myGame.updateVertices(gameBoard);
+        myGame.render();
         sf::sleep(sf::milliseconds(tempsAttenteMilli));
     }
-    
+
     return EXIT_SUCCESS;
 }

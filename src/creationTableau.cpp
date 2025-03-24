@@ -8,10 +8,11 @@ Tableau creationTableau() {
     return carteInitiale;
 }
 
-void addManualValuesTableau(Tableau& mainTab){
+void addManualValuesTableau(Tableau& mainTab) {
+    // Implementation for manual values
 }
 
-void addRandomValuesTableau(Tableau& mainTab){
+void addRandomValuesTableau(Tableau& mainTab) {
     srand(time(0));
     int hauteur = mainTab.getHauteur();
     int largeur = mainTab.getLargeur();
@@ -39,14 +40,13 @@ void addRandomValuesTableau(Tableau& mainTab){
     }
 }
 
-int foundNombreVivantAutour(int posHauteur, int posLargeur, vector<vector<int>> tableauVie){
+int foundNombreVivantAutour(int posHauteur, int posLargeur, const vector<vector<int>>& tableauVie) {
     int hauteur = tableauVie.size();
     int largeur = tableauVie[0].size();
     int compteurVivant = 0;
-    for (int h = -1; h < 2; h++){
-        for (int c = -1; c < 2; c++)
-        {
-            if (h == 0 && c == 0){
+    for (int h = -1; h < 2; h++) {
+        for (int c = -1; c < 2; c++) {
+            if (h == 0 && c == 0) {
                 continue;
             }
             int newH = posHauteur + h;
@@ -59,7 +59,7 @@ int foundNombreVivantAutour(int posHauteur, int posLargeur, vector<vector<int>> 
     return compteurVivant;
 }
 
-void updateTableau(Tableau& mainTab){
+void updateTableau(Tableau& mainTab) {
     int hauteur = mainTab.getHauteur();
     int largeur = mainTab.getLargeur();
     vector<vector<int>> currentTab = mainTab.getCurrentTab();
@@ -94,5 +94,5 @@ void updateTableau(Tableau& mainTab){
         t.join();
     }
 
-    mainTab.setTab(outputTab);
+    mainTab.setTab(std::move(outputTab));
 }
