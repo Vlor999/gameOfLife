@@ -47,3 +47,4 @@ class Tableau
 };
 
 Tableau creationTableau();
+void addRandomValuesTableau(Tableau& mainTab);

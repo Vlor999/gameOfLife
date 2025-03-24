@@ -1,18 +1,26 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <vector>
+#include <iostream>
 #include "include/creationTableau.hpp"
+#include "include/infoDisplay.hpp"
+#include "include/CLIDatas.hpp"
 
-int main() {
-    // Création de la fenêtre SFML
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Game of Life");
+int main(int argc, char *argv[]) {
+    CLIDatas myCLIDatas = CLIDatas(argc, argv);
+    infoDisplay myInfo;
+    myInfo.showInfo();
+    int largeur = myInfo.getHeightDisplay() * myCLIDatas.getProportion();
+    int hauteur = myInfo.getWidthDisplay() * myCLIDatas.getProportion();
+    sf::RenderWindow window(sf::VideoMode(hauteur, largeur), "Game of Life");
     
-    // Création du tableau pour le jeu de la vie
     Tableau gameBoard = creationTableau();
+    addRandomValuesTableau(gameBoard);
     
     // Configuration d'un cercle de test pour vérifier que SFML fonctionne
     sf::CircleShape shape(50);
     shape.setFillColor(sf::Color::Green);
-    shape.setPosition(375, 275);
+    shape.setPosition((hauteur - shape.getRadius() * 2) / 2, (largeur - shape.getRadius() * 2) / 2);
 
     // Boucle principale
     while (window.isOpen()) {
