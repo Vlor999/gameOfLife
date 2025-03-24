@@ -1,0 +1,27 @@
+# Compiled object files
+*.o
+
+# Compiled dynamic libraries
+*.dylib
+
+# Compiled static libraries
+*.a
+
+# Executable files
+*.out
+*.exe
+
+# Debug files
+*.dSYM/
+*.dSStore
+
+# Mac specific files
+.DS_Store
+
+# CMake build directory
+/build/
+/bin/
+
+# Temporary files
+*.tmp
+*.temp
