@@ -7,7 +7,6 @@
 #include "include/infoDisplay.hpp"
 #include "include/CLIDatas.hpp"
 #include "include/gameInfo.hpp"
-#include "include/waiter.hpp"
 
 int main(int argc, char *argv[]) {
     CLIDatas myCLIDatas = CLIDatas(argc, argv);
