@@ -30,6 +30,10 @@ class Tableau
         } 
         
         ~Tableau() {}
+
+        vector<vector<int>> getCurrentTab(){
+            return tableau;
+        }
         
         int getHauteur() const { return hauteur; }
         int getLargeur() const { return largeur; }
@@ -46,7 +50,13 @@ class Tableau
                 tableau[y][x] = value;
             }
         }
+
+        void setTab(vector<vector<int>> newTab){
+            this->tableau = newTab;
+        }
 };
 
 Tableau creationTableau();
 void addRandomValuesTableau(Tableau& mainTab);
+void updateTableau(Tableau& mainTab);
+int foundNombreVivantAutour(int posHauteur, int posLargeur, vector<vector<int>> tableauVie);

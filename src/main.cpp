@@ -2,10 +2,12 @@
 #include <SFML/Window.hpp>
 #include <vector>
 #include <iostream>
+
 #include "include/creationTableau.hpp"
 #include "include/infoDisplay.hpp"
 #include "include/CLIDatas.hpp"
 #include "include/gameInfo.hpp"
+#include "include/waiter.hpp"
 
 int main(int argc, char *argv[]) {
     CLIDatas myCLIDatas = CLIDatas(argc, argv);
@@ -24,9 +26,6 @@ int main(int argc, char *argv[]) {
     sf::RenderWindow& window = myGame.getWindow();
     sf::RectangleShape& cell = myGame.getCell();
     
-    float cellWidth = myGame.getCellWidth();
-    float cellHeight = myGame.getCellHeight();
-    
     // Boucle principale
     while (window.isOpen()) {
         sf::Event event;
@@ -41,13 +40,13 @@ int main(int argc, char *argv[]) {
         for (int y = 0; y < gameBoard.getHauteur(); y++) {
             for (int x = 0; x < gameBoard.getLargeur(); x++) {
                 int cellValue = gameBoard.getCell(y, x);
-                cell.setPosition(x * cellWidth, y * cellHeight);
-                cell.setFillColor(sf::Color(cellValue, cellValue, cellValue));
-                window.draw(cell);
+                myGame.setBox(x, y, cellValue);
             }
         }
         
         window.display();
+        
+        updateTableau(gameBoard);
     }
     
     return EXIT_SUCCESS;

@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <iostream>
 
-
 using namespace std;
 
 class CLIDatas

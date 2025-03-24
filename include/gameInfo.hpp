@@ -39,6 +39,8 @@ class gameInfo
         sf::RectangleShape& getCell(){
             return this->cell;
         }
+
+        void setBox(int x, int y, int cellValue);
 };
 
 gameInfo::gameInfo(string nameOfGame, int hauteur, int largeur, int boardHeight, int boardWidth)
@@ -54,6 +56,12 @@ gameInfo::gameInfo(string nameOfGame, int hauteur, int largeur, int boardHeight,
 
     this->window.create(sf::VideoMode(hauteur, largeur), nameOfGame);
     this->cell = sf::RectangleShape(sf::Vector2f(cellWidth, cellHeight));
+}
+
+void gameInfo::setBox(int x, int y, int cellValue){
+    this->cell.setPosition(x * this->cellWidth, y * this->cellHeight);
+    this->cell.setFillColor(sf::Color(cellValue, cellValue, cellValue));
+    this->window.draw(cell);
 }
 
 gameInfo::~gameInfo()
