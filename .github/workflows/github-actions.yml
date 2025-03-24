@@ -37,3 +37,8 @@ jobs:
         export DISPLAY=:99
         cd build
         ctest --output-on-failure
+
+    - name: Display user who triggered the pipeline
+      env:
+        ACTOR: ${{ github.actor }}
+      run: echo "Pipeline triggered by: $ACTOR"
