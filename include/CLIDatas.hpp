@@ -25,18 +25,24 @@ public:
         for (int i = 1; i < argc; i++){
             if (std::strcmp(argv[i], "--p") == 0 && i + 1 < argc){
                 this->proportion = std::atof(argv[i + 1]);
+                i++;
             }
             else if (std::strcmp(argv[i], "--help") == 0){
                 this->isHelp = true;
             }
             else if (std::strcmp(argv[i], "--n") == 0 && i + 1 < argc){
                 this->nameOfGame = argv[i + 1];
+                i++;
+            }
+            else {
+                displayHelp();
+                exit(EXIT_FAILURE);
             }
         }
 
         if (this->isHelp){
             displayHelp();
-            std::exit(0);
+            exit(EXIT_SUCCESS);
         }
     }
     
@@ -53,8 +59,9 @@ public:
     void displayHelp() const {
         std::cout << "Usage: " << currentFile << " [options]\n"
                   << "Options:\n"
-                  << "  --p <value>    Set the proportion value\n"
-                  << "  --help         Display this help message\n";
+                  << "  --p <value>               Set the proportion value\n"
+                  << "  --n <name of your game>   Set the name of the window"
+                  << "  --help                    Display this help message\n";
     }
 };
 

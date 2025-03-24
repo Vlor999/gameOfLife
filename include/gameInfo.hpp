@@ -18,6 +18,7 @@ class gameInfo
         float cellHeight;
         
         sf::RenderWindow window;
+        sf::RectangleShape cell;
 
     public:
         gameInfo(string nameOfGame, int hauteur, int largeur, int boardHeight, int boardWidth);
@@ -34,6 +35,10 @@ class gameInfo
         sf::RenderWindow& getWindow(){
             return this->window;
         }
+
+        sf::RectangleShape& getCell(){
+            return this->cell;
+        }
 };
 
 gameInfo::gameInfo(string nameOfGame, int hauteur, int largeur, int boardHeight, int boardWidth)
@@ -48,6 +53,7 @@ gameInfo::gameInfo(string nameOfGame, int hauteur, int largeur, int boardHeight,
     this->cellWidth = static_cast<float>(hauteur) / boardWidth;
 
     this->window.create(sf::VideoMode(hauteur, largeur), nameOfGame);
+    this->cell = sf::RectangleShape(sf::Vector2f(cellWidth, cellHeight));
 }
 
 gameInfo::~gameInfo()

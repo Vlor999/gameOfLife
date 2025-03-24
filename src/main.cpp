@@ -22,13 +22,11 @@ int main(int argc, char *argv[]) {
 
     gameInfo myGame = gameInfo(myCLIDatas.getNameOfGame(), hauteur, largeur, boardHeight, boardWidth);
     sf::RenderWindow& window = myGame.getWindow();
+    sf::RectangleShape& cell = myGame.getCell();
     
     float cellWidth = myGame.getCellWidth();
     float cellHeight = myGame.getCellHeight();
     
-    // Création d'un rectangle qui sera réutilisé pour dessiner chaque cellule
-    sf::RectangleShape cell(sf::Vector2f(cellWidth, cellHeight));
-
     // Boucle principale
     while (window.isOpen()) {
         sf::Event event;
@@ -52,5 +50,5 @@ int main(int argc, char *argv[]) {
         window.display();
     }
     
-    return 0;
+    return EXIT_SUCCESS;
 }
