@@ -60,7 +60,7 @@ public:
         std::cout << "Usage: " << currentFile << " [options]\n"
                   << "Options:\n"
                   << "  --p <value>               Set the proportion value\n"
-                  << "  --n <name of your game>   Set the name of the window"
+                  << "  --n <name of your game>   Set the name of the window\n"
                   << "  --help                    Display this help message\n";
     }
 };
