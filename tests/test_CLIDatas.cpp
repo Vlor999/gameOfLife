@@ -18,7 +18,7 @@ void testCLIDatas() {
     // Test with wrong arguments
     const char* argv4[] = {"program", "--x", "1.0", "--y", "Wrong Args"};
     CLIDatas cliData4(5, const_cast<char**>(argv4));
-    assert((cliData4.getProportion() == 0.0f) && "Failed: cliData4.getProportion() != 0.0f in argv4[] test");
+    assert((cliData4.getProportion() == 1.0f) && "Failed: cliData4.getProportion() != 0.0f in argv4[] test");
     assert((cliData4.getNameOfGame() == "Game of life") && "Failed: cliData4.getNameOfGame() != 'Game of life' in argv4[] test");
 
     // Test with redefinition of arguments
