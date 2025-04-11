@@ -1,12 +1,14 @@
+#include "string_traits.hpp" // Add this line at the top before SFML includes
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <vector>
 #include <iostream>
+#include <string>
 
-#include "include/creationTableau.hpp"
-#include "include/infoDisplay.hpp"
-#include "include/CLIDatas.hpp"
-#include "include/gameInfo.hpp"
+#include "creationTableau.hpp"
+#include "infoDisplay.hpp"
+#include "CLIDatas.hpp"
+#include "gameInfo.hpp"
 
 int main(int argc, char *argv[]) {
     CLIDatas myCLIDatas = CLIDatas(argc, argv);

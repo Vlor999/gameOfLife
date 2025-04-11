@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <algorithm>
+#include <string>
 #include "case.hpp"
 
 using namespace std;

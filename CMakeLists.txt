@@ -1,27 +1,35 @@
 cmake_minimum_required(VERSION 3.10)
-project(GameOfLife)
+project(gameOfLife VERSION 1.0 LANGUAGES CXX)
 
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Indiquer le chemin vers SFML 2
-set(SFML_DIR "/opt/homebrew/lib/cmake/SFML")
+# Set SFML directory for macOS with Homebrew
+set(SFML_DIR "/opt/homebrew/opt/sfml@2/lib/cmake/SFML")
 
-# Trouver SFML 2.5 avec les composants nécessaires
-find_package(SFML 2.5 REQUIRED COMPONENTS graphics window system)
+# Find SFML package
+find_package(SFML 2 COMPONENTS graphics window system REQUIRED)
 
-# Définir les fichiers sources
-file(GLOB SOURCES 
-    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+# Include directories
+include_directories(include ${SFML_INCLUDE_DIR})
+
+# Source files
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+
+# Add executable
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Link libraries
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
+
+# Add custom target for cleaning
+add_custom_target(clean-all
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/CMakeFiles
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/CMakeCache.txt
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/${PROJECT_NAME}
+    COMMENT "Cleaning all build files"
 )
-
-# Définir les répertoires d'inclusion
-include_directories(${CMAKE_SOURCE_DIR})
-
-# Ajouter l'exécutable
-add_executable(GameOfLife ${SOURCES})
-
-# Lier SFML à l'exécutable
-target_link_libraries(GameOfLife sfml-graphics sfml-window sfml-system)
 
 # Enable testing
 enable_testing()

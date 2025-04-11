@@ -26,6 +26,11 @@ or use the ```sh``` file :
 ./launcher.sh <options>
 ```
 
+## Exemple : 
+```bash
+./launcher.sh --p 0.8 --size 1000 1000 
+```
+
 ## Installation
 To install [```SFML 2```](https://www.sfml-dev.org/) for : 
 * **macOS**:

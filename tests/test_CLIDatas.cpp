@@ -1,6 +1,6 @@
 #include <cassert>
 #include <iostream>
-#include "include/CLIDatas.hpp"
+#include "CLIDatas.hpp"
 
 void testCLIDatas() {
     const char* argv[] = {"program", "--p", "0.5", "--n", "Test Game"};

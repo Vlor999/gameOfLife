@@ -1,6 +1,6 @@
 #include <cassert>
 #include <iostream>
-#include "include/creationTableau.hpp"
+#include "creationTableau.hpp"
 
 void testTableau() {
     Tableau tableau(10, 10);

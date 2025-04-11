@@ -58,7 +58,7 @@ class gameInfo
 gameInfo::gameInfo(string nameOfGame, int hauteur, int largeur, int boardHeight, int boardWidth)
     : nameOfGame(std::move(nameOfGame)), hauteur(hauteur), largeur(largeur), boardHeight(boardHeight), boardWidth(boardWidth),
       cellHeight(static_cast<float>(largeur) / boardHeight), cellWidth(static_cast<float>(hauteur) / boardWidth),
-      window(sf::VideoMode(hauteur, largeur), this->nameOfGame), cell(sf::Vector2f(cellWidth, cellHeight)) {}
+      window(sf::VideoMode(hauteur, largeur), sf::String(this->nameOfGame)), cell(sf::Vector2f(cellWidth, cellHeight)) {}
 
 void gameInfo::setBox(int x, int y, int cellValue) {
     cell.setPosition(x * cellWidth, y * cellHeight);

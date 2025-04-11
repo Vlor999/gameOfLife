@@ -1,7 +1,8 @@
 #include <thread>
 #include <vector>
-#include "include/creationTableau.hpp"
-#include "include/case.hpp"
+#include <string>
+#include "creationTableau.hpp"
+#include "case.hpp"
 
 Tableau creationTableau() {
     Tableau carteInitiale;
