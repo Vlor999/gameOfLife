@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <cstring>  // Add this for memmove and memcpy functions
 
 // Proper specialization of std::char_traits<unsigned int>
 namespace std {
