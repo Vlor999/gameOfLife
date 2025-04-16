@@ -42,7 +42,7 @@ public:
                 i++;
             } else if (std::strcmp(argv[i], "--size") == 0 && i + 2 < argc) {
                 height = std::atoi(argv[i + 1]);
-                width = std::atoi(argv[i + 1]);
+                width = std::atoi(argv[i + 2]);
                 i += 2;
             } else {
                 displayHelp();
